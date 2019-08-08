@@ -55,8 +55,9 @@ public class Main {
             while(game.gameover()==false){
                 System.out.println();
                 System.out.println(game.printBoard());
+                System.out.println("You are Player X");
                 if (turn % 2 != 0) {
-                    System.out.println("Player X's turn");
+                    System.out.println("Your turn");
                     key=position.nextLine();
                     pos = game.convertkeytocoord(key);
                     while (pos == "invalid") {
@@ -71,7 +72,7 @@ public class Main {
                 }
                 else{
                     System.out.println(game.printBoard());
-                    key=availablemoves.get((int)Math.random()*availablemoves.size());
+                    key=availablemoves.get((int)(Math.random()*availablemoves.size()));   //chooses a random available move
                     availablemoves.remove(key);
                     pos=game.convertkeytocoord(key);
                     rowpos = Integer.valueOf(pos.substring(0, 1));
@@ -101,9 +102,7 @@ public class Main {
                 else
                     {
                     System.out.println(game.printBoard());
-
                     System.out.println("Player O's turn");
-
                     pos = game.convertkeytocoord(position.nextLine());
                     while (pos == "invalid") {
                         System.out.println("Please enter a valid move");
