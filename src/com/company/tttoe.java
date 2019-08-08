@@ -10,31 +10,31 @@ public class tttoe {
         board[row][col]=marker;
     }
     public String convertkeytocoord(String key){
-        if(key.equals("q")&&board[0][0]=="[ ]"){
+        if(key.equals("q")&&board[0][0].equals("[ ]")){
             return "0,0";
         }
-        if(key.equals("w")&&board[0][1]=="[ ]"){
+        if(key.equals("w")&&board[0][1].equals("[ ]")){
             return "0,1";
         }
-        if(key.equals("e")&&board[0][2]=="[ ]"){
+        if(key.equals("e")&&board[0][2].equals("[ ]")){
             return "0,2";
         }
-        if(key.equals("a")&&board[1][0]=="[ ]"){
+        if(key.equals("a")&&board[1][0].equals("[ ]")){
             return "1,0";
         }
-        if(key.equals("s")&&board[1][1]=="[ ]"){
+        if(key.equals("s")&&board[1][1].equals("[ ]")){
             return "1,1";
         }
-        if(key.equals("d")&&board[1][2]=="[ ]"){
+        if(key.equals("d")&&board[1][2].equals("[ ]")){
             return "1,2";
         }
-        if(key.equals("z")&&board[2][0]=="[ ]"){
+        if(key.equals("z")&&board[2][0].equals("[ ]")){
             return "2,0";
         }
-        if(key.equals("x")&&board[2][1]=="[ ]"){
+        if(key.equals("x")&&board[2][1].equals("[ ]")){
             return "2,1";
         }
-        if(key.equals("c")&&board[2][2]=="[ ]"){
+        if(key.equals("c")&&board[2][2].equals("[ ]")){
             return "2,2";
         }
         else{
@@ -52,13 +52,13 @@ public class tttoe {
 
 
     public boolean winacross(String marker){
-        if(board[0][0]==marker&&board[1][0]==marker&&board[2][0]==marker){
+        if(board[0][0].equals(marker)&&board[1][0].equals(marker)&&board[2][0].equals(marker)){
             return true;
         }
-        else if(board[0][1]==marker&&board[1][1]==marker&&board[2][1]==marker){
+        else if(board[0][1].equals(marker)&&board[1][1].equals(marker)&&board[2][1].equals(marker)){
             return true;
         }
-        else if(board[0][2]==marker&&board[1][2]==marker&&board[2][2]==marker){
+        else if(board[0][2].equals(marker)&&board[1][2].equals(marker)&&board[2][2].equals(marker)){
             return true;
         }
         else{
@@ -66,49 +66,34 @@ public class tttoe {
         }
     }
     public boolean winvertical(String marker){
-        if(board[0][0]==marker&&board[0][1]==marker&&board[0][2]==marker){
+        if(board[0][0].equals(marker)&&board[0][1].equals(marker)&&board[0][2].equals(marker)){
             return true;
         }
-        else if(board[1][0]==marker&&board[1][1]==marker&&board[1][2]==marker){
+        else if(board[1][0].equals(marker)&&board[1][1].equals(marker)&&board[1][2].equals(marker)){
             return true;
         }
-        else if(board[2][0]==marker&&board[2][1]==marker&&board[2][2]==marker){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return(board[2][0].equals(marker)&&board[2][1].equals(marker)&&board[2][2].equals(marker));
     }
     public boolean windiagonal(String marker){
-        if(board[0][0]==marker&&board[1][1]==marker&&board[2][2]==marker){
+        if(board[0][0].equals(marker)&&board[1][1].equals(marker)&&board[2][2].equals(marker)){
             return true;
         }
-        else if(board[2][0]==marker&&board[1][1]==marker&&board[0][2]==marker){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return(board[2][0].equals(marker)&&board[1][1].equals(marker)&&board[0][2].equals(marker));
     }
     public boolean win(String marker){
-        if(winacross(marker)==true){
+        if(winacross(marker)){
             return true;
         }
-        else if(winvertical(marker)==true){
+        else if(winvertical(marker)){
             return true;
         }
-        else if (windiagonal(marker)==true){
-            return true;
-        }
-        else{
-            return false;
-        }
+        return (windiagonal(marker));
     }
     public boolean tie(){
         boolean tie=true;
         for(int x = 0;x<board.length;x++){
             for(int y = 0;y<board[x].length;y++){
-                if(board[x][y]=="[ ]"){
+                if(board[x][y].equals("[ ]")){
                     tie=false;
                 }
             }
@@ -116,7 +101,7 @@ public class tttoe {
         return tie;
     }
     public boolean gameover(){
-        if(win("[X]")==true||win("[O]")==true||tie()==true){
+        if(win("[X]")||win("[O]")||tie()){
             return true;
         }
         else{

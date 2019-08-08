@@ -15,7 +15,7 @@ public class Main {
         tttoe game = new tttoe();
         game.reset();
         Scanner position = new Scanner(System.in);
-        int mode=0;
+        int mode;
         Scanner gamemode = new Scanner(System.in);
         String strMode;
         System.out.println("Would you like to play 'pve' or 'pvp'");
@@ -24,7 +24,7 @@ public class Main {
         if(strMode.equals("pve") || strMode.equals("pvp")){
             gamestart=true;
         }
-        while(gamestart==false){
+        while(!gamestart){
             System.out.println("Invalid game mode");
             strMode=gamemode.nextLine();
             if((strMode.equals("pve") || strMode.equals("pvp"))){
@@ -33,7 +33,7 @@ public class Main {
         }
         if (strMode.equals("pve")) {
             mode = 1;
-        } else if (strMode.equals("pvp")) {
+        } else  {
             mode = 2;
         }
         String pos;
@@ -52,7 +52,7 @@ public class Main {
             availablemoves.add("z");
             availablemoves.add("x");
             availablemoves.add("c");
-            while(game.gameover()==false){
+            while(!game.gameover()){
                 System.out.println();
                 System.out.println(game.printBoard());
                 System.out.println("You are Player X");
@@ -60,7 +60,8 @@ public class Main {
                     System.out.println("Your turn");
                     key=position.nextLine();
                     pos = game.convertkeytocoord(key);
-                    while (pos == "invalid") {
+                    while (pos.equals("invalid")) {
+                        System.out.println(game.printBoard());
                         System.out.println("Please enter a valid move");
                         key=position.nextLine();
                         pos = game.convertkeytocoord(key);
@@ -71,7 +72,6 @@ public class Main {
                     game.playermove("[X]", rowpos, colpos);
                 }
                 else{
-                    System.out.println(game.printBoard());
                     key=availablemoves.get((int)(Math.random()*availablemoves.size()));   //chooses a random available move
                     availablemoves.remove(key);
                     pos=game.convertkeytocoord(key);
@@ -83,14 +83,15 @@ public class Main {
             }
         }
         else
-        if (mode == 2){
-            while (game.gameover() == false) {
+        {
+            while (!game.gameover()) {
                 System.out.println();
                 System.out.println(game.printBoard());
                 if (turn % 2 != 0) {
                     System.out.println("Player X's turn");
                     pos = game.convertkeytocoord(position.nextLine());
-                    while (pos == "invalid") {
+                    while (pos.equals("invalid")) {
+                        System.out.println(game.printBoard());
                         System.out.println("Please enter a valid move");
                         pos = game.convertkeytocoord(position.nextLine());
                     }
@@ -101,10 +102,10 @@ public class Main {
                 }
                 else
                     {
-                    System.out.println(game.printBoard());
                     System.out.println("Player O's turn");
                     pos = game.convertkeytocoord(position.nextLine());
-                    while (pos == "invalid") {
+                    while (pos.equals("invalid")) {
+                        System.out.println(game.printBoard());
                         System.out.println("Please enter a valid move");
                         pos = game.convertkeytocoord(position.nextLine());
                     }
@@ -118,12 +119,12 @@ public class Main {
                 // write your code here
             }
     }
-        if(game.win("[X]")==true){
+        if(game.win("[X]")){
             System.out.println(game.printBoard());
             System.out.println("Player X wins");
 
         }
-        else if(game.win("[O]")==true){
+        else if(game.win("[O]")){
             System.out.println(game.printBoard());
             System.out.println("Player O wins");
         }
