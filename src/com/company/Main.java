@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) throws InterruptedException {
         System.out.println("This is a text based tictactoe game");
         Thread.sleep(1000);
-        System.out.println("Please enter the corresponding key to your desired position");
+        System.out.println("Please enter the corresponding key to your desired move");
         Thread.sleep(1000);
         System.out.println("[q][w][e]\n[a][s][d]\n[z][x][c]");
         Thread.sleep(1000);
@@ -118,15 +118,14 @@ public class Main {
                 // write your code here
             }
     }
-        if(game.xwin()==true){
+        if(game.win("[X]")==true){
             System.out.println(game.printBoard());
             System.out.println("Player X wins");
 
         }
-        else if(game.owin()==true){
+        else if(game.win("[O]")==true){
             System.out.println(game.printBoard());
             System.out.println("Player O wins");
-
         }
         else{
             System.out.println(game.printBoard());

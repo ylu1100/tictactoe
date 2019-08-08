@@ -50,9 +50,6 @@ public class tttoe {
         }
     }
 
-    public String[][] getBoard() {
-        return board;
-    }
 
     public boolean winacross(String marker){
         if(board[0][0]==marker&&board[1][0]==marker&&board[2][0]==marker){
@@ -93,28 +90,14 @@ public class tttoe {
             return false;
         }
     }
-    public boolean xwin(){
-        if(winacross("[X]")==true){
+    public boolean win(String marker){
+        if(winacross(marker)==true){
             return true;
         }
-        else if(winvertical("[X]")==true){
+        else if(winvertical(marker)==true){
             return true;
         }
-        else if (windiagonal("[X]")==true){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-    public boolean owin(){
-        if(winacross("[O]")==true){
-            return true;
-        }
-        else if(winvertical("[O]")==true){
-            return true;
-        }
-        else if (windiagonal("[O]")==true){
+        else if (windiagonal(marker)==true){
             return true;
         }
         else{
@@ -133,7 +116,7 @@ public class tttoe {
         return tie;
     }
     public boolean gameover(){
-        if(xwin()==true||owin()==true||tie()==true){
+        if(win("[X]")==true||win("[O]")==true||tie()==true){
             return true;
         }
         else{
@@ -150,6 +133,8 @@ public class tttoe {
         }
         return boardstr;
     }
+    public void AIWIN(String marker){
 
+    }
 
 }
