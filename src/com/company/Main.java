@@ -7,11 +7,8 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("This is a text based tictactoe game");
-        Thread.sleep(1000);
         System.out.println("Please enter the corresponding key to your desired move");
-        Thread.sleep(1000);
         System.out.println("[q][w][e]\n[a][s][d]\n[z][x][c]");
-        Thread.sleep(1000);
         String key;
         tttoe game = new tttoe();
         game.reset();
