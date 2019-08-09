@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.ArrayList;
+
 public class tttoe {
     private String[][]board;
     public tttoe(){
@@ -40,6 +42,17 @@ public class tttoe {
         else{
             return "invalid";
         }
+    }
+    public void pveAddMoves(ArrayList<String>moves){
+        moves.add("q");
+        moves.add("w");
+        moves.add("e");
+        moves.add("a");
+        moves.add("s");
+        moves.add("d");
+        moves.add("z");
+        moves.add("x");
+        moves.add("c");
     }
 
     public void reset(){
@@ -118,8 +131,105 @@ public class tttoe {
         }
         return boardstr;
     }
-    public void AIWIN(String marker){
-
+    public String botDiagonalMove(String marker){
+        if(board[0][0].equals(marker)&&board[1][1].equals(marker)&&board[2][2].equals("[ ]")){
+            return "c";
+        }
+        else if(board[0][0].equals(marker)&&board[2][2].equals(marker)&&board[1][1].equals("[ ]")){
+            return "s";
+        }
+        else if(board[1][1].equals(marker)&&board[2][2].equals(marker)&&board[0][0].equals("[ ]")){
+            return "q";
+        }
+        else if(board[0][2].equals(marker)&&board[1][1].equals(marker)&&board[2][0].equals("[ ]")){
+            return "z";
+        }
+        else if(board[0][2].equals(marker)&&board[2][0].equals(marker)&&board[1][1].equals("[ ]")){
+            return "s";
+        }
+        else if(board[1][1].equals(marker)&&board[2][0].equals(marker)&&board[0][2].equals("[ ]")){
+            return "e";
+        }
+        else{
+            return "invalid";
+        }
     }
-
+    public String botAcrossMove(String marker){
+        if(board[0][2].equals(marker)&&board[0][1].equals(marker)&&board[0][0].equals("[ ]")){
+            return "q";
+        }
+        else if(board[0][0].equals(marker)&&board[0][2].equals(marker)&&board[0][1].equals("[ ]")){
+            return "w";
+        }
+        else if(board[0][0].equals(marker)&&board[0][1].equals(marker)&&board[0][2].equals("[ ]")){
+            return "e";
+        }
+        else if(board[1][1].equals(marker)&&board[1][2].equals(marker)&&board[1][0].equals("[ ]")){
+            return "a";
+        }
+        else if(board[1][0].equals(marker)&&board[1][2].equals(marker)&&board[1][1].equals("[ ]")){
+            return "s";
+        }
+        else if(board[1][0].equals(marker)&&board[1][1].equals(marker)&&board[1][2].equals("[ ]")){
+            return "d";
+        }
+        else if(board[2][1].equals(marker)&&board[2][2].equals(marker)&&board[2][0].equals("[ ]")){
+            return "z";
+        }
+        else if(board[2][0].equals(marker)&&board[2][2].equals(marker)&&board[2][1].equals("[ ]")){
+            return "x";
+        }
+        else if(board[2][0].equals(marker)&&board[2][1].equals(marker)&&board[2][2].equals("[ ]")){
+            return "c";
+        }
+        else {
+            return "invalid";
+        }
+    }
+    public String botVerticalMove(String marker){
+        if(board[1][0].equals(marker)&&board[2][0].equals(marker)&&board[0][0].equals("[ ]")){
+            return "q";
+        }
+        else if(board[1][1].equals(marker)&&board[2][1].equals(marker)&&board[0][1].equals("[ ]")){
+            return "w";
+        }
+        else if(board[2][1].equals(marker)&&board[2][2].equals(marker)&&board[0][2].equals("[ ]")){
+            return "e";
+        }
+        else if(board[0][0].equals(marker)&&board[2][0].equals(marker)&&board[1][0].equals("[ ]")){
+            return "a";
+        }
+        else if(board[0][1].equals(marker)&&board[2][1].equals(marker)&&board[1][1].equals("[ ]")){
+            return "s";
+        }
+        else if(board[0][2].equals(marker)&&board[2][2].equals(marker)&&board[1][2].equals("[ ]")){
+            return "d";
+        }
+        else if(board[0][0].equals(marker)&&board[1][0].equals(marker)&&board[2][0].equals("[ ]")){
+            return "z";
+        }
+        else if(board[1][1].equals(marker)&&board[0][1].equals(marker)&&board[2][1].equals("[ ]")){
+            return "x";
+        }
+        else if(board[0][2].equals(marker)&&board[1][2].equals(marker)&&board[2][2].equals("[ ]")){
+            return "c";
+        }
+        else {
+            return "invalid";
+        }
+    }
+    public String botMove(String marker){
+        if(!botDiagonalMove(marker).equals("invalid")){
+            return botDiagonalMove(marker);
+        }
+        else if(!botVerticalMove(marker).equals("invalid")){
+            return botVerticalMove(marker);
+        }
+        else if(!botAcrossMove(marker).equals("invalid")){
+            return botAcrossMove(marker);
+        }
+        else{
+            return "invalid";
+        }
+    }
 }

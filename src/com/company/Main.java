@@ -43,15 +43,7 @@ public class Main {
         if(mode==1){
             String key;
             ArrayList<String>availablemoves=new ArrayList<>();
-            availablemoves.add("q");
-            availablemoves.add("w");
-            availablemoves.add("e");
-            availablemoves.add("a");
-            availablemoves.add("s");
-            availablemoves.add("d");
-            availablemoves.add("z");
-            availablemoves.add("x");
-            availablemoves.add("c");
+            game.pveAddMoves(availablemoves);
             while(!game.gameover()){
                 System.out.println();
                 System.out.println(game.printBoard());
@@ -72,7 +64,13 @@ public class Main {
                     game.playermove("[X]", rowpos, colpos);
                 }
                 else{
-                    key=availablemoves.get((int)(Math.random()*availablemoves.size()));   //chooses a random available move
+                    key=game.botMove("[O]"); //bot finds winning move if possible
+                    if(key.equals("invalid")){
+                        key=game.botMove("[X]");   //prevents winning move from the player
+                    }
+                    if(key.equals("invalid")) {
+                        key = availablemoves.get((int) (Math.random() * availablemoves.size()));
+                    }//chooses a random available move
                     availablemoves.remove(key);
                     pos=game.convertkeytocoord(key);
                     rowpos = Integer.valueOf(pos.substring(0, 1));
@@ -116,7 +114,6 @@ public class Main {
 
                 }
                 turn++;
-                // write your code here
             }
     }
         if(game.win("[X]")){
