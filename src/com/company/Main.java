@@ -12,38 +12,43 @@ public class Main {
         Thread.sleep(1000);
         System.out.println("[q][w][e]\n[a][s][d]\n[z][x][c]");
         Thread.sleep(1000);
+        String key;
         tttoe game = new tttoe();
         game.reset();
         Scanner position = new Scanner(System.in);
         int mode;
         Scanner gamemode = new Scanner(System.in);
         String strMode;
-        System.out.println("Would you like to play 'pve' or 'pvp'");
+        System.out.println("Would you like to play 'pve' or 'pvp' or watch 'botvbot'");
         boolean gamestart=false;
         strMode=gamemode.nextLine();
-        if(strMode.equals("pve") || strMode.equals("pvp")){
+        if(strMode.equals("pve") || strMode.equals("pvp") || strMode.equals("botvbot")){
             gamestart=true;
         }
         while(!gamestart){
             System.out.println("Invalid game mode");
             strMode=gamemode.nextLine();
-            if((strMode.equals("pve") || strMode.equals("pvp"))){
+            if((strMode.equals("pve") || strMode.equals("pvp")|| strMode.equals("botvbot"))){
                 gamestart=true;
             }
         }
         if (strMode.equals("pve")) {
             mode = 1;
-        } else  {
+        }
+        else  if(strMode.equals("pvp")){
             mode = 2;
+        }
+        else{
+            mode=3;
         }
         String pos;
         int rowpos;
         int colpos;
+        ArrayList<String>availablemoves=new ArrayList<>();
+        game.pveAddMoves(availablemoves);
         int turn = 1;
-        if(mode==1){            //PVE
-            String key;
-            ArrayList<String>availablemoves=new ArrayList<>();
-            game.pveAddMoves(availablemoves);
+        /////////////////////////PVE/////////////////////
+        if(mode==1){
             while(!game.gameover()){
                 System.out.println();
                 System.out.println(game.printBoard());
@@ -80,9 +85,12 @@ public class Main {
                 turn++;
             }
         }
-        else
+
+
+        ///////////////PVP//////////////////
+        else if(mode==2)
         {
-            while (!game.gameover()) {     //PVP
+            while (!game.gameover()) {
                 System.out.println();
                 System.out.println(game.printBoard());
                 if (turn % 2 != 0) {
@@ -116,6 +124,48 @@ public class Main {
                 turn++;
             }
     }
+
+
+        ////////////////BOTVBOT/////////////////////
+        else{
+            while(!game.gameover()){
+                System.out.println();
+                System.out.println(game.printBoard());
+                if(turn%2!=0){
+                    Thread.sleep(1000);
+                    System.out.println("BOT X's turn");
+                    key=game.botMove("[X]"); //bot finds winning move if possible
+                    if(key.equals("invalid")){
+                        key=game.botMove("[O]");   //prevents winning move from the opponent
+                    }
+                    if(key.equals("invalid")) {
+                        key = availablemoves.get((int) (Math.random() * availablemoves.size()));
+                    }//chooses a random available move
+                    availablemoves.remove(key);
+                    pos=game.convertkeytocoord(key);
+                    rowpos = Integer.valueOf(pos.substring(0, 1));
+                    colpos = Integer.valueOf(pos.substring(2));
+                    game.playermove("[X]", rowpos, colpos);
+                }
+                else{
+                    Thread.sleep(1000);
+                    System.out.println("BOT O's turn");
+                    key=game.botMove("[O]"); //bot finds winning move if possible
+                    if(key.equals("invalid")){
+                        key=game.botMove("[X]");   //prevents winning move from the opponent
+                    }
+                    if(key.equals("invalid")) {
+                        key = availablemoves.get((int) (Math.random() * availablemoves.size()));
+                    }//chooses a random available move
+                    availablemoves.remove(key);
+                    pos=game.convertkeytocoord(key);
+                    rowpos = Integer.valueOf(pos.substring(0, 1));
+                    colpos = Integer.valueOf(pos.substring(2));
+                    game.playermove("[O]", rowpos, colpos);
+                }
+                turn++;
+            }
+        }
         if(game.win("[X]")){
             System.out.println(game.printBoard());
             System.out.println("Player X wins");
