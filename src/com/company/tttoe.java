@@ -1,16 +1,164 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class tttoe {
     private String[][]board;
-    public tttoe(){
+    private String key;
+    private boolean gamestart;
+    private int turn;
+    private int rowpos;
+    private int colpos;
+    private Scanner position;
+    private String pos;
+    private ArrayList<String>availablemoves;
+    public tttoe(String mode)throws InterruptedException {
         board=new String[3][3];
+        gamestart=false;
+        turn=1;
+        availablemoves=new ArrayList<>();
+        pveAddMoves(availablemoves);
+        position = new Scanner(System.in);
+        reset();
+        if (mode.equals("pve")) {
+            pveMode();
+        }
+        else  if(mode.equals("pvp")){
+            pvpmode();
+        }
+        else{
+            botvbot();
+        }
+    }
+    public void displayresult(){
+        if(win("[X]")){
+            System.out.println(printBoard());
+            System.out.println("Player X wins");
+
+        }
+        else if(win("[O]")){
+            System.out.println(printBoard());
+            System.out.println("Player O wins");
+        }
+        else{
+            System.out.println(printBoard());
+            System.out.println("It's a draw");
+
+        }
+    }
+    public void pveMode() {
+        while (!gameover()) {
+            System.out.println();
+            System.out.println(printBoard());
+            System.out.println("You are Player X");
+            if (turn % 2 != 0) {
+                System.out.println("Your turn");
+                key = position.nextLine();
+                pos = convertkeytocoord(key);
+                while (pos.equals("invalid")) {
+                    System.out.println(printBoard());
+                    System.out.println("Please enter a valid move");
+                    key = position.nextLine();
+                    pos = convertkeytocoord(key);
+                }
+                availablemoves.remove(key);
+                rowpos = Integer.valueOf(pos.substring(0, 1));
+                colpos = Integer.valueOf(pos.substring(2));
+                playermove("[X]", rowpos, colpos);
+            } else {
+                key = botMove("[O]"); //bot finds winning move if possible
+                if (key.equals("invalid")) {
+                    key = botMove("[X]");   //prevents winning move from the player
+                }
+                if (key.equals("invalid")) {
+                    key = availablemoves.get((int) (Math.random() * availablemoves.size()));
+                }//chooses a random available move
+                availablemoves.remove(key);
+                pos = convertkeytocoord(key);
+                rowpos = Integer.valueOf(pos.substring(0, 1));
+                colpos = Integer.valueOf(pos.substring(2));
+                playermove("[O]", rowpos, colpos);
+            }
+            turn++;
+        }
     }
 
+    public void pvpmode() {
+        while (!gameover()) {
+            System.out.println();
+            System.out.println(printBoard());
+            if (turn % 2 != 0) {
+                System.out.println("Player X's turn");
+                pos = convertkeytocoord(position.nextLine());
+                while (pos.equals("invalid")) {
+                    System.out.println(printBoard());
+                    System.out.println("Please enter a valid move");
+                    pos = convertkeytocoord(position.nextLine());
+                }
+
+                rowpos = Integer.valueOf(pos.substring(0, 1));
+                colpos = Integer.valueOf(pos.substring(2));
+                playermove("[X]", rowpos, colpos);
+            } else {
+                System.out.println("Player O's turn");
+                pos = convertkeytocoord(position.nextLine());
+                while (pos.equals("invalid")) {
+                    System.out.println(printBoard());
+                    System.out.println("Please enter a valid move");
+                    pos = convertkeytocoord(position.nextLine());
+                }
+                rowpos = Integer.valueOf(pos.substring(0, 1));
+                colpos = Integer.valueOf(pos.substring(2));
+
+                playermove("[O]", rowpos, colpos);
+
+            }
+            turn++;
+        }
+    }
+    public void botvbot() throws InterruptedException {
+        while (!gameover()) {
+            System.out.println();
+            System.out.println(printBoard());
+            if (turn % 2 != 0) {
+                Thread.sleep(1000);
+                System.out.println("BOT X's turn");
+                key = botMove("[X]"); //bot finds winning move if possible
+                if (key.equals("invalid")) {
+                    key = botMove("[O]");   //prevents winning move from the opponent
+                }
+                if (key.equals("invalid")) {
+                    key = availablemoves.get((int) (Math.random() * availablemoves.size()));
+                }//chooses a random available move
+                availablemoves.remove(key);
+                pos = convertkeytocoord(key);
+                rowpos = Integer.valueOf(pos.substring(0, 1));
+                colpos = Integer.valueOf(pos.substring(2));
+                playermove("[X]", rowpos, colpos);
+            } else {
+                Thread.sleep(1000);
+                System.out.println("BOT O's turn");
+                key = botMove("[O]"); //bot finds winning move if possible
+                if (key.equals("invalid")) {
+                    key = botMove("[X]");   //prevents winning move from the opponent
+                }
+                if (key.equals("invalid")) {
+                    key = availablemoves.get((int) (Math.random() * availablemoves.size()));
+                }//chooses a random available move
+                availablemoves.remove(key);
+                pos = convertkeytocoord(key);
+                rowpos = Integer.valueOf(pos.substring(0, 1));
+                colpos = Integer.valueOf(pos.substring(2));
+                playermove("[O]", rowpos, colpos);
+            }
+            turn++;
+        }
+    }
     public void playermove(String marker,int row,int col){
         board[row][col]=marker;
     }
+
     public String convertkeytocoord(String key){
         if(key.equals("q")&&board[0][0].equals("[ ]")){
             return "0,0";
