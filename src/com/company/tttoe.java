@@ -131,6 +131,7 @@ public class tttoe {
         }
         return boardstr;
     }
+    //algorithms for smarter bot moves
     public String botDiagonalMove(String marker){
         if(board[0][0].equals(marker)&&board[1][1].equals(marker)&&board[2][2].equals("[ ]")){
             return "c";
