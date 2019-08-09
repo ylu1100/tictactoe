@@ -40,7 +40,7 @@ public class Main {
         int rowpos;
         int colpos;
         int turn = 1;
-        if(mode==1){
+        if(mode==1){            //PVE
             String key;
             ArrayList<String>availablemoves=new ArrayList<>();
             game.pveAddMoves(availablemoves);
@@ -82,7 +82,7 @@ public class Main {
         }
         else
         {
-            while (!game.gameover()) {
+            while (!game.gameover()) {     //PVP
                 System.out.println();
                 System.out.println(game.printBoard());
                 if (turn % 2 != 0) {
